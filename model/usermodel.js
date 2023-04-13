@@ -20,18 +20,42 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  about: {
+    type: String,
+  },
+  education: {
+    type: String,
+  },
+  currentPos: {
+    type: String,
+  },
   image: {
     type: String
   },
-  links: [{
-    type: String
-  }],
+  links: {
+    linkedin:{
+      type:String,
+    },
+    github:{
+      type:String,
+    },
+    facebook:{
+      type:String,
+    },
+    twitter:{
+      type:String,
+    },
+    instagram:{
+      type:String,
+    },
+    website:{
+      type:String,
+    },
+  }    
+  ,
   followers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }]
 });
-
-
-
 module.exports=mongoose.model("User",userSchema);

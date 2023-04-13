@@ -72,6 +72,47 @@ app.post('/register', async (req, res) => {
   });
   
   
+  app.get('/profile/:id', async (req, res) => {
+    const _id=req.params.id;
+    try {
+      const user = await User.findOne({_id});
+      console.log(user)
+      res.status(200).json(user);
+    } catch (error) {
+      console.log(error.message);
+      res.status(400).json({message:"Error !!!"});
+    }
+   
+  });
+    
+
+// Endpoint for updating user's about
+    app.put('/about/:id',async(req,res)=>{
+      const _id=req.params.id;
+      const about=req.body.about;
+      try {
+        const user=await User.findByIdAndUpdate({_id},{about},{new:true})
+        console.log(user)
+        res.status(200);
+      } catch (error) {
+        console.log(error.message)
+        res.status(400).json({message:"error"})
+      }
+    })
+
+    app.put('/links/:id',async(req,res)=>{
+      const _id=req.params.id;
+      const links=req.body.links
+      try {
+        const user=await User.findByIdAndUpdate({_id},{links},{new:true})
+        console.log(user)
+        res.status(200)
+      } catch (error) {
+        console.log(error.message)
+      }
+
+    })
+
   // Endpoint for updating user profile details
   app.put('/profile', async (req, res) => {
       const { firstName, lastName, email, image, links } = req.body;
@@ -86,7 +127,6 @@ app.post('/register', async (req, res) => {
       }
     });
     
-  
     // Endpoint for updating user password
   app.put('/password', async (req, res) => {
     const { email, oldPassword, newPassword } = req.body;
