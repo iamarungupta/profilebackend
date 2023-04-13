@@ -1,16 +1,12 @@
-
-
-
 const express=require('express');
 const bcrypt = require('bcrypt');
 const User = require('./model/usermodel');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors=require('cors');
 
-app=express();
+const app=express();
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser. json());
 
 
 
@@ -18,7 +14,8 @@ app.use(bodyParser. json());
 //const router = require('./routes/register');
 // Use the login and register routes as middleware//
 //app.use('/register', router);
-app.post('/', async (req, res) => {
+app.post('/register', async (req, res) => {
+  console.log(req.body)
     try {
       const { firstName, lastName, email, password } = req.body;
       // Check if user with same email already exists
@@ -54,9 +51,11 @@ app.post('/', async (req, res) => {
   // Login user
   app.post('/login', async (req, res) => {
     try {
+      console.log(req.body);
       const { email, password } = req.body;
       // Check if user with email exists
       const user = await User.findOne({ email });
+      
       if (!user) {
         return res.status(400).json({ message: 'Invalid email or password' });
       }
@@ -65,7 +64,7 @@ app.post('/', async (req, res) => {
       if (!isMatch) {
         return res.status(400).json({ message: 'Invalid email or password' });
       }
-      res.json({ message: 'User logged in successfully' });
+      res.status(200).json(user);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Error logging in user' });
