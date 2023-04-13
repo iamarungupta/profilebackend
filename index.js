@@ -3,12 +3,34 @@ const bcrypt = require('bcrypt');
 const User = require('./model/usermodel');
 // const bodyParser = require('body-parser');
 const cors=require('cors');
-
 const app=express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+var multer = require('multer');
+ 
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
 
+var upload = multer({ storage: storage });
 
+app.post('/upload/:id', upload.single('image'), (req, res, next) => {
+ const id=req.params.id
+ console.log(id)
+  var obj = {
+      img: {
+          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+          contentType: 'image/png'
+      }
+  }
+  
+});
 
 
 //const router = require('./routes/register');

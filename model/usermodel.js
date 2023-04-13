@@ -29,9 +29,7 @@ const userSchema = new mongoose.Schema({
   currentPos: {
     type: String,
   },
-  image: {
-    type: String
-  },
+
   links: {
     linkedin:{
       type:String,
@@ -53,6 +51,13 @@ const userSchema = new mongoose.Schema({
     },
   }    
   ,
+  image:{
+    img:
+    {
+        data: Buffer,
+        contentType: String
+    }
+  },
   followers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
